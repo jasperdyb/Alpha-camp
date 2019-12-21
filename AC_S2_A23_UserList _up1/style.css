@@ -1,0 +1,19 @@
+.fa-female{
+  color: violet;
+}
+
+.fa-male{
+  color: blue;
+}
+
+body {
+  background-color: lightslategray;
+}
+
+ul {
+    text-align: left;
+}
+
+.fas.fa-heart {
+  color: crimson;
+}
