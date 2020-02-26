@@ -1,0 +1,19 @@
+//- <a href="/todos/new">Create</a>
+
+//- <ul>
+//-   {{#each todos}}
+//-     <li>
+//-       {{{this.name}}}
+//-       <a href="#">detail</a>
+//-       <a href="#">edit</a>
+//-       <button type="submit">delete</button>
+//-     </li>
+//-   {{/each}}
+//- </ul>
+
+a(href="/todos/new") Create
+each todo in todos
+  li #{todo.name} 
+    a(href="#") detail  
+    a(href="#") create
+    button(type="submit") delete     

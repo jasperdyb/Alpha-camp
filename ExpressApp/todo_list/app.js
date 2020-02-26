@@ -20,13 +20,21 @@ db.once('open', () => {
   console.log('mongodb connected!')
 })
 
+//模板載入
+app.set('view engine', 'pug')
 
 app.get('/', (req, res) => {
-  res.send('hello world!')
+  Todo.find()
+    .lean()
+    .exec((err, todos) => { // 把 Todo model 所有的資料都抓回來
+      if (err) return console.error(err)
+      // console.log(todos)
+      return res.render('index', { todos: todos }) // 將資料傳給 index 樣板
+    })
 })
 // 列出全部 Todo
 app.get('/todos', (req, res) => {
-  res.send('列出所有 Todo')
+  return res.redirect('/')
 })
 // 新增一筆 Todo 頁面
 app.get('/todos/new', (req, res) => {
