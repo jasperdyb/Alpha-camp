@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')                    // 載入 mongoose
+const bodyParser = require('body-parser')
 
 mongoose.connect('mongodb://localhost/todo', { useNewUrlParser: true, useUnifiedTopology: true })   // 設定連線到 mongoDB
 
@@ -22,6 +23,8 @@ db.once('open', () => {
 
 //模板載入
 app.set('view engine', 'pug')
+app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
   Todo.find()
@@ -38,19 +41,36 @@ app.get('/todos', (req, res) => {
 })
 // 新增一筆 Todo 頁面
 app.get('/todos/new', (req, res) => {
-  res.send('新增 Todo 頁面')
+  // res.send('新增 Todo 頁面')
+  return res.render('new')
 })
 // 顯示一筆 Todo 的詳細內容
 app.get('/todos/:id', (req, res) => {
-  res.send('顯示 Todo 的詳細內容')
+  // res.send('顯示 Todo 的詳細內容')
+  Todo.findById(req.params.id)
+    .lean()
+    .exec((err, todo) => {
+      if (err) return console.error(err)
+      return res.render('detail', { todo: todo })
+    })
+
 })
 // 新增一筆  Todo
 app.post('/todos', (req, res) => {
-  res.send('建立 Todo')
+  // res.send('建立 Todo')
+  const todo = new Todo({
+    name: req.body.name,    // name 是從 new 頁面 form 傳過來
+  })
+  // 存入資料庫
+  todo.save(err => {
+    if (err) return console.error(err)
+    return res.redirect('/')  // 新增完成後，將使用者導回首頁
+  })
 })
 // 修改 Todo 頁面
 app.get('/todos/:id/edit', (req, res) => {
   res.send('修改 Todo 頁面')
+
 })
 // 修改 Todo
 app.post('/todos/:id/edit', (req, res) => {

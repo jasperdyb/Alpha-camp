@@ -4,7 +4,7 @@
 //-   {{#each todos}}
 //-     <li>
 //-       {{{this.name}}}
-//-       <a href="#">detail</a>
+//-       <a href="/todos/{{{this._id}}}">detail</a><-- 修改這裡 -->
 //-       <a href="#">edit</a>
 //-       <button type="submit">delete</button>
 //-     </li>
@@ -14,6 +14,6 @@
 a(href="/todos/new") Create
 each todo in todos
   li #{todo.name} 
-    a(href="#") detail  
+    a(href='/todos/'+ todo._id) detail  
     a(href="#") create
     button(type="submit") delete     
