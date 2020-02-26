@@ -5,8 +5,10 @@
 //-     <li>
 //-       {{{this.name}}}
 //-       <a href="/todos/{{{this._id}}}">detail</a><-- 修改這裡 -->
-//-       <a href="#">edit</a>
-//-       <button type="submit">delete</button>
+//-       <a href="/todos/{{{this._id}}}/edit">edit</a>
+//-       <form action="/todos/{{{this._id}}}/delete" method="POST" style="display: inline;">
+  <button type="submit">delete</button>
+</form>
 //-     </li>
 //-   {{/each}}
 //- </ul>
@@ -15,5 +17,6 @@ a(href="/todos/new") Create
 each todo in todos
   li #{todo.name} 
     a(href='/todos/'+ todo._id) detail  
-    a(href="#") create
-    button(type="submit") delete     
+    a(href='/todos/'+ todo._id +'/edit') edit
+    form(action="/todos/" + todo._id +'/delete' method="POST" style="display: inline;") 
+      button(type="submit") delete   

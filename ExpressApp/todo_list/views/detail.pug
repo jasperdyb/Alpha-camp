@@ -1,10 +1,13 @@
 //- <!-- ./views/detail.handlebars -->
 //- <p>{{{todo.name}}}</p>
 //- <a href="/">back</a>
-//- <a href="#">edit</a>
-//- <button type="submit">delete</button>
+//- <a href="/todos/{{{todo._id}}}/edit">edit</a>
+//- <form action="/todos/{{{todo._id}}}/delete" method="POST" style="display: inline;">
+//-   <button type="submit">delete</button>
+//- </form>
 
 p #{todo.name}
 a(href="/") back
-a(href="#") edit
-button(type="submit") delete
+a(href="todos/"+todo._id+'/edit') edit
+form(action="/todos" + todo._id +'/delete' method="POST" style="display: inline;") 
+  button(type="submit") delete  
